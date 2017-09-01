@@ -1,6 +1,7 @@
 function Map(id){
   this.id = id;
-  this.init();
+  this.mapObj = this.init();
+
 }
 
 Map.prototype.init = function(){
@@ -8,7 +9,7 @@ Map.prototype.init = function(){
   // set the map options hash
   var mapOptions = {
       center: myLatlng,
-      zoom: 16,
+      zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   // get the maps div's HTML obj
@@ -22,5 +23,40 @@ Map.prototype.init = function(){
   });
   // Add the marker to the map by calling setMap()
   marker.setMap(map);
+  return map;
+
+}
+
+Map.prototype.getMarker = function(x, y, name) {
+  var targetLatlng = new google.maps.LatLng(x,y);
+  var marker = new google.maps.Marker({
+        position: targetLatlng,
+        title: name
+    });
+  return marker;
+}
+
+Map.prototype.removeAllMarkers = function() {
+  // console.log("removeAllMarkers called");
+  // console.log(plannedDays)
+  plannedDays.forEach(day => {
+    // console.log(day);
+    day.hotels.forEach(item => {
+      // console.log('hotel marker removal');
+      item.marker.setMap(null);
+      // console.log(item.marker.setMap(null));
+    });
+    day.restaurants.forEach(item => {
+      // console.log('restaurants marker removal');
+      item.marker.setMap(null);
+      // console.log(item.marker.setMap(null));
+    });
+    day.activities.forEach(item => {
+      // console.log('activities marker removal');
+      item.marker.setMap(null);
+      // console.log(item.marker.setMap(null));
+    });
+    // console.log('============================')
+  })
 
 }

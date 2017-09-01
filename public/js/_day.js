@@ -4,7 +4,21 @@
 //   <br clear='both' />
 // </li>
 
-function drawDay(targetDay) {
+function drawDay(targetDay, map) {
+    // console.log("Iside drawDay");
+    targetDay.hotels.forEach((item) => {
+        // console.log('mapObj is ' + map.mapObj);
+        item.marker.setMap(map.mapObj);
+    });
+
+    targetDay.restaurants.forEach((item) => {
+        item.marker.setMap(map.mapObj);
+    });
+
+    targetDay.activities.forEach((item) => {
+        item.marker.setMap(map.mapObj);
+    });
+
     return `
         <div id='day_detail' class='panel panel-default'>
           <div class='panel-heading'>
@@ -43,7 +57,7 @@ function makeLi(arr, type){
     return arr.reduce((elements, item, index) => {
         return elements + `
             <li class='list-group-item'>
-              ${item}
+              ${item.name}
               <button id='${type}_${index}' class='btn btn-warning btn-sm pull-right'>x</button>
               <br clear='both' />
             </li>
