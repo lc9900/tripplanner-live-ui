@@ -19,7 +19,7 @@ let config = process.env;
 try {
   config = require('./env.json');
 }
-catch(ex){
+catch (ex) {
 
 }
 app.use(function(req, res, next){
