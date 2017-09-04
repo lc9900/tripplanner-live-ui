@@ -4,6 +4,11 @@
 //   <br clear='both' />
 // </li>
 
+// Here the map obj has to get passed, because map is defined within
+// the $(function(){}) jquery function, and thus it's not a global variable.
+// Since drawDay is defined here, map is not in drawDay's scope.
+// Now if drawDay is defined within $(function(){}), then it would have access to
+// map
 function drawDay(targetDay, map) {
     // console.log("Iside drawDay");
     targetDay.hotels.forEach((item) => {
