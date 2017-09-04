@@ -1,6 +1,8 @@
 function Map(id){
   this.id = id;
+  this.bounds = new google.maps.LatLngBounds();
   this.mapObj = this.init();
+
 
 }
 
@@ -9,7 +11,7 @@ Map.prototype.init = function(){
   // set the map options hash
   var mapOptions = {
       center: myLatlng,
-      zoom: 13,
+      zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   // get the maps div's HTML obj
@@ -23,6 +25,16 @@ Map.prototype.init = function(){
   });
   // Add the marker to the map by calling setMap()
   marker.setMap(map);
+  this.bounds.extend(marker.position);
+
+  // https://stackoverflow.com/questions/4523023/using-setzoom-after-using-fitbounds-with-google-maps-api-v3
+  google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+    if (this.getZoom() > 16) {
+      this.setZoom(16);
+    }
+  });
+  map.fitBounds(this.bounds);
+
   return map;
 
 }

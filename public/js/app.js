@@ -1,5 +1,6 @@
 $(function(){
   var map = new Map('map');
+  // var bounds = new google.maps.LatLngBounds();
 
   // Option Section
   $('#right-pane').append(options);
@@ -17,7 +18,11 @@ $(function(){
         name: hotel.name,
         marker: map.getMarker(hotel.place.location[0], hotel.place.location[1], name)
     }
+
     selectObj.marker.setMap(map.mapObj);
+
+    map.bounds.extend(selectObj.marker.position);
+    map.mapObj.fitBounds(map.bounds);
 
     plannedDays[dayNum-1].hotels.push(selectObj);
     dayAddLi('ul.hotels', hotel.name, plannedDays[dayNum-1].hotels.length-1);
@@ -35,6 +40,10 @@ $(function(){
         marker: map.getMarker(restaurant.place.location[0], restaurant.place.location[1], restaurant.name)
     }
     selectObj.marker.setMap(map.mapObj);
+
+    // var bounds = new google.maps.LatLngBounds();
+    map.bounds.extend(selectObj.marker.position);
+    map.mapObj.fitBounds(map.bounds);
     // var name = $('select.restaurants option:selected').text()
 
     // Need to add the activities to the actual Day object
@@ -56,7 +65,11 @@ $(function(){
         name: activity.name,
         marker: map.getMarker(activity.place.location[0], activity.place.location[1], activity.name)
     }
+    // var bounds = new google.maps.LatLngBounds();
+    map.bounds.extend(selectObj.marker.position);
     selectObj.marker.setMap(map.mapObj);
+
+    map.mapObj.fitBounds(map.bounds);
     // var name = $('select.activities option:selected').text()
     // Need to add the activities to the actual Day object
     var dayNum = $('ul.dayPicker>li.active').text();
